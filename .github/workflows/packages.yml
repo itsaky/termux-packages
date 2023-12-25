@@ -10,11 +10,6 @@ on:
     - 'packages/**'
     - 'root-packages/**'
     - 'x11-packages/**'
-  pull_request:
-    paths:
-    - 'packages/**'
-    - 'root-packages/**'
-    - 'x11-packages/**'
   workflow_dispatch:
     inputs:
       packages:
@@ -30,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        target_arch: [aarch64, arm, i686, x86_64]
+        target_arch: [aarch64, arm, x86_64]
       fail-fast: false
     steps:
     - name: Setup arm and aarch64 CPU emulators
@@ -250,7 +245,8 @@ jobs:
     concurrency: ${{ github.workflow }}
     permissions:
       contents: read
-    if: github.event_name != 'pull_request' && github.ref != 'refs/heads/dev' && !startsWith(github.ref, 'refs/heads/dev/')
+    # if: github.event_name != 'pull_request' && github.ref != 'refs/heads/dev' && !startsWith(github.ref, 'refs/heads/dev/')
+    if: false
     needs: build
     runs-on: ubuntu-latest
     steps:
